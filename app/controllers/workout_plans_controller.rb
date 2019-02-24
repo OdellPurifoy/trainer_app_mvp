@@ -1,5 +1,5 @@
 class WorkoutPlansController < ApplicationController
-  before_action :set_workout_plan, only: [:show, :edit, :update, :destroy]
+  before_action :set_workout_plan, only: %i[show edit update destroy]
 
   # GET /workout_plans
   # GET /workout_plans.json
@@ -9,8 +9,7 @@ class WorkoutPlansController < ApplicationController
 
   # GET /workout_plans/1
   # GET /workout_plans/1.json
-  def show
-  end
+  def show; end
 
   # GET /workout_plans/new
   def new
@@ -18,8 +17,7 @@ class WorkoutPlansController < ApplicationController
   end
 
   # GET /workout_plans/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /workout_plans
   # POST /workout_plans.json
@@ -62,13 +60,14 @@ class WorkoutPlansController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_workout_plan
-      @workout_plan = WorkoutPlan.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def workout_plan_params
-      params.require(:workout_plan).permit(:title, :description, :level, :price)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_workout_plan
+    @workout_plan = WorkoutPlan.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def workout_plan_params
+    params.require(:workout_plan).permit(:title, :description, :level, :price)
+  end
 end
