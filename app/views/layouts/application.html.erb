@@ -11,36 +11,43 @@
 
   <body>
     <!-- Start of navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#">Navbar</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Home
-              <span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Features</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Pricing</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" href="#">Disabled</a>
-          </li>
-        </ul>
+    <nav class="navbar navbar-light bg-light">
+      <a class="navbar-brand" href="/">TrainerApp</a>
+      <% if user_signed_in? %>
+        <form class="form-inline">
+          <%= link_to current_user.name, edit_user_registration_path, class: "btn btn-outline-primary" %>
+          <div style="padding-left: 10px; padding-right: 10px;">
+            <%= link_to "Logout", destroy_user_session_path, method: :delete, class:"btn btn-outline-danger" %>
+          </div>
+        </form>
+
+        <% elsif user_signed_in? && current_user.role == :admin %>
+          <form class="form-inline">
+            <%= link_to current_user.name, edit_user_registration_path, class: "btn btn-outline-primary" %>
+            <div style="padding-left: 10px; padding-right: 10px;">
+              <%= link_to "Logout", destroy_user_session_path, method: :delete, class:"btn btn-outline-danger" %>
+            </div>
+            <div style="padding-left: 10px; padding-right: 10px;">
+              <%= link_to "Create Plan", new_workouts_plans_path, class:"btn btn-outline-danger" %>
+            </div>
+          </form>
+
+        <% else %>
+          <form class="form-inline">
+            <%= link_to 'Sign In', new_user_session_path, class: "btn btn-outline-primary" %>
+            <div style="padding-left: 10px; padding-right: 10px;">
+              <%= link_to 'Sign Up', new_user_registration_path, class: "btn btn-outline-primary" %>
+            </div>
+          </form>
+        <% end %>
+      </nav>
+      <!-- End of navbar -->
+
+      <div class="container">
+        <p class="notice"><%= notice %></p>
+        <p class="alert"><%= alert %></p>
+
+        <%= yield %>
       </div>
-    </nav>
-    <!-- End of navbar -->
-
-    <div class="container">
-      <p class="notice"><%= notice %></p>
-      <p class="alert"><%= alert %></p>
-
-      <%= yield %>
-    </div>
-  </body>
-</html>
+    </body>
+  </html>
